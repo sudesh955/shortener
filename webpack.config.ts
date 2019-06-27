@@ -1,5 +1,5 @@
 import * as path from "path";
-import { Configuration } from "webpack";
+import { Configuration, DefinePlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const production = process.env.NODE_ENV === "production";
@@ -10,7 +10,8 @@ const config: Configuration = {
   output: {
     publicPath: "/dist/",
     filename: "[name].js",
-    path: path.resolve(__dirname, "./build")
+    path: path.resolve(__dirname, "./build"),
+    chunkFilename: production ? "[contenthast].js" : "[id].js"
   },
   module: {
     rules: [
@@ -27,7 +28,13 @@ const config: Configuration = {
                 }
               }
             ],
-            "@babel/preset-typescript"
+            "@babel/preset-typescript",
+            [
+              "@babel/preset-react",
+              {
+                development: true
+              }
+            ]
           ],
           plugins: ["react-hot-loader/babel"]
         }
@@ -46,9 +53,10 @@ const config: Configuration = {
       title: "App",
       meta: {
         viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
-      },
-      hash: production,
-      xhtml: true
+      }
+    }),
+    new DefinePlugin({
+      __DEV__: production ? "false" : "true"
     })
   ],
   devServer: {

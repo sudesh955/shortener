@@ -4,6 +4,8 @@
     "noEmit": true,
     "target": "es2020",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "strictNullChecks": true
   }
 }

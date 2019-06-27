@@ -1,6 +1,6 @@
 import * as path from "path";
 import NodemonPlugin from "nodemon-webpack-plugin";
-import { Configuration } from "webpack";
+import { Configuration, DefinePlugin } from "webpack";
 
 const production = process.env.NODE_ENV === "production";
 
@@ -9,7 +9,8 @@ const config: Configuration = {
   entry: "./server",
   output: {
     path: path.resolve(__dirname, "./build"),
-    filename: "[name].js"
+    filename: "[name].js",
+    chunkFilename: production ? "[contenthast].js" : "[id].js"
   },
   module: {
     rules: [
@@ -38,8 +39,17 @@ const config: Configuration = {
   },
   target: "node",
   watch: !production,
-  plugins: [new NodemonPlugin()],
-  stats: "errors-warnings"
+  plugins: [
+    new NodemonPlugin(),
+    new DefinePlugin({
+      __DEV__: production ? "false" : "true"
+    })
+  ],
+  stats: "errors-warnings",
+  externals: {
+    express: "commonjs express",
+    sequelize: "commonjs sequelize"
+  }
 };
 
 export default config;
