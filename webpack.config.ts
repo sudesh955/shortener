@@ -9,9 +9,9 @@ const config: Configuration = {
   entry: "./web",
   output: {
     publicPath: "/dist/",
-    filename: "[name].js",
-    path: path.resolve(__dirname, "./build"),
-    chunkFilename: production ? "[contenthast].js" : "[id].js"
+    filename: production ? "[contenthash].js" : "[name].js",
+    path: path.resolve(__dirname, "./dist"),
+    chunkFilename: production ? "[contenthash].js" : "[id].js"
   },
   module: {
     rules: [
@@ -36,7 +36,10 @@ const config: Configuration = {
               }
             ]
           ],
-          plugins: ["react-hot-loader/babel"]
+          plugins: [
+            "@babel/plugin-syntax-dynamic-import",
+            "react-hot-loader/babel"
+          ]
         }
       }
     ]

@@ -10,7 +10,7 @@ const config: Configuration = {
   output: {
     path: path.resolve(__dirname, "./build"),
     filename: "[name].js",
-    chunkFilename: production ? "[contenthast].js" : "[id].js"
+    chunkFilename: production ? "[contenthash].js" : "[id].js"
   },
   module: {
     rules: [

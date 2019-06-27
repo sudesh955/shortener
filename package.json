@@ -1,11 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "start": "node build/main.js",
-    "dev": "cross-env NODE_ENV=development concurrently \"webpack --config webpack.server.ts\" \"webpack-dev-server\" "
+    "start": "cross-env NODE_ENV=production node build/main.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --config webpack.server.ts && cross-env NODE_ENV=production webpack --progress",
+    "dev": "cross-env NODE_ENV=development concurrently \"webpack --config webpack.server.ts\" \"webpack-dev-server\" ",
+    "clean": "rimraf build dist"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
@@ -26,6 +29,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.11.1",
+    "rimraf": "^2.6.3",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2",
     "webpack": "^4.35.0",

@@ -1,13 +1,14 @@
 import { hot } from "react-hot-loader/root";
-import React, { useReducer, useEffect, useCallback } from "react";
+import React, { useReducer, useEffect, Suspense, useCallback } from "react";
 import Box from "@material-ui/core/Box";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import { Link, subscribe } from "./links";
-import List from "./List";
 import Create from "./Create";
 import NotFound from "./NotFound";
-import LinkView from "./LinkView";
+
+const LinkView = React.lazy(() => import("./LinkView"));
+const List = React.lazy(() => import("./List"));
 
 type State = {
   links: Link[];
@@ -47,14 +48,14 @@ function App() {
     <CssBaseline>
       <Box maxWidth={600} m="auto" pt={2}>
         <NotFound />
-        {state.selected === null ? (
-          <>
-            <Create />
+        {state.selected === null && <Create />}
+        <Suspense fallback={null}>
+          {state.selected === null ? (
             <List view={viewLink} data={state.links} />
-          </>
-        ) : (
-          <LinkView link={state.selected} unselect={unselect} />
-        )}
+          ) : (
+            <LinkView link={state.selected} unselect={unselect} />
+          )}
+        </Suspense>
       </Box>
     </CssBaseline>
   );
