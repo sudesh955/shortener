@@ -68,7 +68,7 @@ export function init() {
 }
 
 export async function remove(id: string): Promise<boolean> {
-  const response = await fetch(`/links/${id}`, { method: "delete" });
+  const response = await fetch(`/api/link/${id}`, { method: "delete" });
   const removed = response.status === 200;
   if (removed) {
     updateLinks(links.filter(link => link.id !== id));

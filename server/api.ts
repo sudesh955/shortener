@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createLink, clicks } from "./links";
+import { createLink, removeLink, clicks } from "./links";
 
 const router = Router();
 
@@ -23,7 +23,7 @@ router.get("/link/:id/clicks", (req, res) => {
 router.delete("/link/:id", (req, res) => {
   removeLink(req.params.id)
     .then(removed => res.status(removed ? 200 : 404).end())
-    .catch(() => res.status(500).end());
+    .catch(error => res.status(500).send(error));
 });
 
 export default router;

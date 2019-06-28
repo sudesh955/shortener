@@ -56,7 +56,8 @@ export async function initModels() {
         type: DataTypes.TEXT
       },
       LinkId: {
-        type: DataTypes.STRING(16)
+        type: DataTypes.STRING(16),
+        allowNull: false
       }
     },
     {
@@ -66,7 +67,9 @@ export async function initModels() {
     }
   );
 
-  Click.belongsTo(Link);
+  Click.belongsTo(Link, {
+    onDelete: "CASCADE"
+  });
   Link.hasMany(Click);
   await sequelize.sync();
 }
