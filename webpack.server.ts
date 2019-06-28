@@ -24,12 +24,16 @@ const config: Configuration = {
               {
                 targets: {
                   node: "current"
-                }
+                },
+                corejs: 3,
+                modules: false,
+                useBuiltIns: "usage"
               }
             ],
             "@babel/preset-typescript"
           ]
-        }
+        },
+        exclude: /node_modules/
       }
     ]
   },

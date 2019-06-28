@@ -23,16 +23,17 @@ const config: Configuration = {
             [
               "@babel/preset-env",
               {
-                targets: {
-                  node: "current"
-                }
+                corejs: 3,
+                modules: false,
+                useBuiltIns: "usage",
+                targets: "> 0.25%, not dead"
               }
             ],
             "@babel/preset-typescript",
             [
               "@babel/preset-react",
               {
-                development: true
+                development: !production
               }
             ]
           ],
@@ -40,7 +41,8 @@ const config: Configuration = {
             "@babel/plugin-syntax-dynamic-import",
             "react-hot-loader/babel"
           ]
-        }
+        },
+        exclude: /node_modules/
       }
     ]
   },
