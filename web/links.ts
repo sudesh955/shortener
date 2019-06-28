@@ -61,10 +61,14 @@ export async function clicks(id: string): Promise<Click[]> {
   return data;
 }
 
-export function init() {
+export function initStorage() {
   const data = localStorage.getItem(LINK_STORAGE_KEY);
   if (data === null) return;
   updateLinks(JSON.parse(data));
+  window.addEventListener("storage", event => {
+    if (event.key !== LINK_STORAGE_KEY) return;
+    updateLinks(JSON.parse(event.newValue || "[]"));
+  });
 }
 
 export async function remove(id: string): Promise<boolean> {

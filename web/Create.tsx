@@ -72,7 +72,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function List() {
+function Create() {
   const [state, dispatch] = useReducer(reducer, null, init);
   const changeURL = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
@@ -166,4 +166,4 @@ function validateURL(str: string): Error | string {
   }
 }
 
-export default React.memo<Props>(List);
+export default React.memo<Props>(Create);
