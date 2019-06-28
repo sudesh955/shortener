@@ -2,6 +2,7 @@ import { hot } from "react-hot-loader/root";
 import React, { useReducer, useEffect, Suspense, useCallback } from "react";
 import Box from "@material-ui/core/Box";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { Link, subscribe } from "./links";
 import Create from "./Create";
@@ -46,10 +47,16 @@ function App() {
   );
   return (
     <CssBaseline>
-      <Box maxWidth={600} m="auto" pt={2}>
+      <Box maxWidth={600} m="auto" p={2}>
         <NotFound />
         {state.selected === null && <Create />}
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Box display="flex" mt={2} justifyContent="center">
+              <CircularProgress />
+            </Box>
+          }
+        >
           {state.selected === null ? (
             <List view={viewLink} data={state.links} />
           ) : (

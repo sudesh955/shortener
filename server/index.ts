@@ -42,7 +42,9 @@ async function main() {
     app.use(
       "/dist",
       express.static(path.join(process.cwd(), "dist"), {
-        immutable: true
+        maxAge: "100 day",
+        immutable: true,
+        fallthrough: false
       })
     );
   }

@@ -41,6 +41,9 @@ type Action =
   | {
       type: "LINK";
       link: Link;
+    }
+  | {
+      type: "RESET";
     };
 
 function init(): State {
@@ -62,6 +65,8 @@ function reducer(state: State, action: Action): State {
       return { ...state, request: action.request, error: null };
     case "LINK":
       return { ...state, link: action.link, request: null };
+    case "RESET":
+      return init();
     default:
       throw new Error();
   }
@@ -128,20 +133,25 @@ function List() {
           </Box>
         </form>
         {creating && <CircularProgress />}
-        {state.link !== null && <ShortLink link={state.link} />}
+        {state.link !== null && (
+          <ShortLink
+            reset={() => dispatch({ type: "RESET" })}
+            link={state.link}
+          />
+        )}
       </Paper>
     </Box>
   );
 }
 
-function ShortLink({ link }: { link: Link }) {
+function ShortLink({ link, reset }: { link: Link; reset: () => void }) {
   return (
     <Box display="flex" justifyContent="space-between" alignItems="center">
       <Done />
       <MLink target="_blank" href={`/${link.id}`}>
         {`${window.location.host}/${link.id}`}
       </MLink>
-      <Button variant="contained" color="secondary">
+      <Button onClick={reset} variant="contained" color="secondary">
         New
       </Button>
     </Box>

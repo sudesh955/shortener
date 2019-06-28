@@ -62,7 +62,9 @@ function Clicks({ id }: { id: string }) {
     };
   }, [id]);
   return state === null ? (
-    <CircularProgress />
+    <Box display="flex" mt={2} justifyContent="center">
+      <CircularProgress />
+    </Box>
   ) : (
     <>
       {state.map(click => (
